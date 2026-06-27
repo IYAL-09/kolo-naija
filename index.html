@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Naija Kolo | Save Towards Your Goals</title>
+
+<meta name="description" content="Naija Kolo helps Nigerians save money towards their goals securely using dedicated virtual accounts.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--primary:#0f9d58;
+--primary-dark:#087443;
+--secondary:#15c06e;
+--bg:#08140d;
+--card:#102118;
+--card-light:#162a20;
+--text:#ffffff;
+--muted:#b7c8be;
+--border:rgba(255,255,255,0.08);
+--shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+}
+
+.container{
+width:90%;
+max-width:1200px;
+margin:auto;
+}
+
+/* NAVBAR */
+
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:1000;
+backdrop-filter:blur(20px);
+background:rgba(8,20,13,.9);
+border-bottom:1px solid var(--border);
+}
+
+.navbar{
+height:80px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+font-size:1.3rem;
+font-weight:800;
+color:white;
+text-decoration:none;
+}
+
+.logo-icon{
+width:45px;
+height:45px;
+background:linear-gradient(
+135deg,
+#15c06e,
+#0f9d58
+);
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+box-shadow:var(--shadow);
+}
+
+.nav-links{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+.nav-links a{
+color:var(--muted);
+text-decoration:none;
+font-weight:500;
+transition:.3s;
+}
+
+.nav-links a:hover{
+color:white;
+}
+
+.nav-buttons{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.btn{
+padding:12px 24px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+text-decoration:none;
+transition:.3s;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+}
+
+.btn-outline{
+border:1px solid var(--border);
+color:white;
+background:transparent;
+}
+
+.btn-outline:hover{
+background:rgba(255,255,255,.05);
+}
+
+.btn-primary{
+background:linear-gradient(
+135deg,
+var(--secondary),
+var(--primary)
+);
+color:white;
+}
+
+.btn-primary:hover{
+transform:translateY(-2px);
+}
+
+.menu-toggle{
+display:none;
+font-size:28px;
+cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+padding-top:150px;
+padding-bottom:100px;
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:'';
+position:absolute;
+width:500px;
+height:500px;
+background:rgba(21,192,110,.12);
+filter:blur(120px);
+top:-150px;
+right:-100px;
+border-radius:50%;
+}
+
+.hero-content{
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+gap:60px;
+}
+
+.badge{
+display:inline-flex;
+align-items:center;
+gap:10px;
+padding:10px 18px;
+border:1px solid var(--border);
+background:rgba(255,255,255,.03);
+border-radius:50px;
+margin-bottom:25px;
+font-size:.9rem;
+color:#9ce5b8;
+}
+
+.hero h1{
+font-size:4rem;
+line-height:1.1;
+margin-bottom:20px;
+font-weight:800;
+}
+
+.hero h1 span{
+background:linear-gradient(
+135deg,
+#15c06e,
+#7ef7b4
+);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+font-size:1.1rem;
+line-height:1.8;
+color:var(--muted);
+margin-bottom:35px;
+max-width:600px;
+}
+
+.hero-buttons{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.hero-card{
+background:linear-gradient(
+180deg,
+rgba(255,255,255,.05),
+rgba(255,255,255,.02)
+);
+border:1px solid var(--border);
+border-radius:30px;
+padding:35px;
+backdrop-filter:blur(20px);
+box-shadow:var(--shadow);
+}
+
+.card-title{
+font-size:1.1rem;
+margin-bottom:25px;
+font-weight:600;
+}
+
+.goal-box{
+background:var(--card);
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.goal-box h3{
+font-size:1rem;
+margin-bottom:8px;
+color:var(--muted);
+}
+
+.goal-box .amount{
+font-size:2rem;
+font-weight:800;
+}
+
+.progress{
+width:100%;
+height:12px;
+background:#1b3225;
+border-radius:50px;
+overflow:hidden;
+margin-top:15px;
+}
+
+.progress-bar{
+height:100%;
+width:72%;
+background:linear-gradient(
+90deg,
+#15c06e,
+#7ef7b4
+);
+border-radius:50px;
+}
+
+/* SECTION */
+
+section{
+padding:100px 0;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.section-title h2{
+font-size:2.8rem;
+margin-bottom:15px;
+}
+
+.section-title p{
+max-width:700px;
+margin:auto;
+color:var(--muted);
+line-height:1.8;
+}
+
+/* FEATURES */
+
+.features-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+.feature-card{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:25px;
+padding:30px;
+transition:.3s;
+}
+
+.feature-card:hover{
+transform:translateY(-6px);
+border-color:#15c06e;
+}
+
+.feature-icon{
+width:65px;
+height:65px;
+border-radius:18px;
+background:rgba(21,192,110,.12);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+margin-bottom:20px;
+}
+
+.feature-card h3{
+margin-bottom:15px;
+}
+
+.feature-card p{
+color:var(--muted);
+line-height:1.7;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.hero-content{
+grid-template-columns:1fr;
+}
+
+.features-grid{
+grid-template-columns:1fr;
+}
+
+.nav-links{
+position:absolute;
+top:80px;
+left:0;
+width:100%;
+background:#0b1811;
+flex-direction:column;
+padding:30px;
+display:none;
+}
+
+.nav-links.active{
+display:flex;
+}
+
+.menu-toggle{
+display:block;
+}
+
+.nav-buttons{
+display:none;
+}
+
+.hero h1{
+font-size:2.8rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+    <header>
+    <div class="container navbar">
+    
+    <a href="#" class="logo">
+    <div class="logo-icon">🐷</div>
+    <span>Naija Kolo</span>
+    </a>
+    
+    <ul class="nav-links" id="navLinks">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+    </ul>
+    
+    <div class="nav-buttons">
+    <a href="#" class="btn btn-outline">Login</a>
+    <a href="#" class="btn btn-primary">Get Started</a>
+    </div>
+    
+    <div class="menu-toggle" id="menuToggle">
+    ☰
+    </div>
+    
+    </div>
+    </header>
+    
+    <!-- HERO -->
+    
+    <section class="hero">
+    
+    <div class="container">
+    
+    <div class="hero-content">
+    
+    <div>
+    
+    <div class="badge">
+    🇳🇬 Built For Nigerians
+    </div>
+    
+    <h1>
+    Save Money For
+    <span>Your Goals</span>
+    Without Stress
+    </h1>
+    
+    <p>
+    Naija Kolo helps you save towards important goals using your personal virtual account. Set a target, save consistently, and withdraw when your goal is achieved.
+    </p>
+    
+    <div class="hero-buttons">
+    <a href="#" class="btn btn-primary">
+    Start Saving
+    </a>
+    
+    <a href="#how" class="btn btn-outline">
+    Learn More
+    </a>
+    </div>
+    
+    </div>
+    
+    <div class="hero-card">
+    
+    <div class="card-title">
+    Your Savings Goal
+    </div>
+    
+    <div class="goal-box">
+    <h3>Laptop Fund</h3>
+    <div class="amount">₦180,000</div>
+    
+    <div class="progress">
+    <div class="progress-bar"></div>
+    </div>
+    </div>
+    
+    <div class="goal-box">
+    <h3>Monthly Deposit</h3>
+    <div class="amount">₦15,000</div>
+    </div>
+    
+    <div class="goal-box">
+    <h3>Status</h3>
+    <div class="amount">Active</div>
+    </div>
+    
+    </div>
+    
+    </div>
+    
+    </div>
+    
+    </section>
+    
+    <!-- FEATURES -->
+    
+    <section id="features">
+    
+    <div class="container">
+    
+    <div class="section-title">
+    <h2>Why Choose Naija Kolo?</h2>
+    
+    <p>
+    Everything you need to build disciplined saving habits and reach your financial goals faster.
+    </p>
+    </div>
+    
+    <div class="features-grid">
+    
+    <div class="feature-card">
+    <div class="feature-icon">🎯</div>
+    <h3>Goal-Based Saving</h3>
+    <p>
+    Create savings plans for school fees, rent, gadgets, business capital, travel, or any personal goal.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">🏦</div>
+    <h3>Dedicated Virtual Account</h3>
+    <p>
+    Every user receives a personal virtual account for seamless deposits and automated tracking.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">⚡</div>
+    <h3>Fast Deposits</h3>
+    <p>
+    Save instantly through bank transfer into your assigned account anytime.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">🔒</div>
+    <h3>Secure Platform</h3>
+    <p>
+    Modern security practices help keep your account and savings information protected.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">📊</div>
+    <h3>Track Progress</h3>
+    <p>
+    Monitor your growth and stay motivated as you move closer to your savings target.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">💰</div>
+    <h3>Easy Withdrawal</h3>
+    <p>
+    Withdraw your savings once your target goal has been reached and completed.
+    </p>
+    </div>
+    
+    </div>
+    
+    </div>
+    
+    </section>
+    
+    <!-- HOW IT WORKS -->
+    
+    <section id="how">
+    
+    <div class="container">
+    
+    <div class="section-title">
+    <h2>How It Works</h2>
+    
+    <p>
+    Getting started takes only a few minutes.
+    </p>
+    </div>
+    
+    <div class="features-grid">
+    
+    <div class="feature-card">
+    <div class="feature-icon">1️⃣</div>
+    <h3>Create Account</h3>
+    <p>
+    Sign up and create your personal Naija Kolo profile.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">2️⃣</div>
+    <h3>Create Goal</h3>
+    <p>
+    Choose what you want to save for and set your target amount.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">3️⃣</div>
+    <h3>Fund Savings</h3>
+    <p>
+    Transfer money into your dedicated virtual account whenever you want.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">4️⃣</div>
+    <h3>Track Progress</h3>
+    <p>
+    Watch your savings grow through your dashboard.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">5️⃣</div>
+    <h3>Reach Goal</h3>
+    <p>
+    Achieve your target and unlock withdrawals.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <div class="feature-icon">6️⃣</div>
+    <h3>Withdraw Funds</h3>
+    <p>
+    Receive your money directly into your bank account.
+    </p>
+    </div>
+    
+    </div>
+    
+    </div>
+    
+    </section>
+    
+    <!-- FAQ -->
+    
+    <section id="faq">
+    
+    <div class="container">
+    
+    <div class="section-title">
+    <h2>Frequently Asked Questions</h2>
+    
+    <p>
+    Answers to common questions about Naija Kolo.
+    </p>
+    </div>
+    
+    <div class="feature-card">
+    <h3>How do I save money?</h3>
+    <p>
+    Transfer funds into your personal virtual account and your balance updates automatically.
+    </p>
+    </div>
+    
+    <br>
+    
+    <div class="feature-card">
+    <h3>Can I create multiple goals?</h3>
+    <p>
+    Yes. Users can create multiple savings goals and track them separately.
+    </p>
+    </div>
+    
+    <br>
+    
+    <div class="feature-card">
+    <h3>Is my account secure?</h3>
+    <p>
+    Yes. Security and user protection are core priorities of the platform.
+    </p>
+    </div>
+    
+    </div>
+    
+    </section>
+    
+    <!-- CTA -->
+    
+    <section>
+    
+    <div class="container">
+    
+    <div class="hero-card" style="text-align:center;">
+    
+    <h2 style="font-size:2.5rem;margin-bottom:20px;">
+    Start Saving Today
+    </h2>
+    
+    <p style="max-width:700px;margin:auto;color:#b7c8be;">
+    Build discipline, achieve your goals, and take control of your future with Naija Kolo.
+    </p>
+    
+    <br><br>
+    
+    <a href="#" class="btn btn-primary">
+    Create Free Account
+    </a>
+    
+    </div>
+    
+    </div>
+    
+    </section>
+    
+    <!-- FOOTER -->
+    
+    <footer id="contact" style="padding:80px 0;border-top:1px solid rgba(255,255,255,.08);">
+    
+    <div class="container">
+    
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;">
+    
+    <div>
+    <h3 style="margin-bottom:20px;">Naija Kolo</h3>
+    
+    <p style="color:#b7c8be;line-height:1.8;">
+    Helping Nigerians save towards meaningful goals through a modern digital savings experience.
+    </p>
+    </div>
+    
+    <div>
+    <h3 style="margin-bottom:20px;">Company</h3>
+    
+    <p><a href="#" style="color:#b7c8be;text-decoration:none;">About Us</a></p>
+    <br>
+    <p><a href="#" style="color:#b7c8be;text-decoration:none;">Contact</a></p>
+    </div>
+    
+    <div>
+    <h3 style="margin-bottom:20px;">Legal</h3>
+    
+    <p><a href="#" style="color:#b7c8be;text-decoration:none;">Privacy Policy</a></p>
+    <br>
+    <p><a href="#" style="color:#b7c8be;text-decoration:none;">Terms & Conditions</a></p>
+    </div>
+    
+    <div>
+    <h3 style="margin-bottom:20px;">Support</h3>
+    
+    <p><a href="#" style="color:#b7c8be;text-decoration:none;">Help Center</a></p>
+    <br>
+    <p><a href="#" style="color:#b7c8be;text-decoration:none;">support@naijakolo.com</a></p>
+    </div>
+    
+    </div>
+    
+    <div style="margin-top:50px;text-align:center;color:#8ca096;">
+    © 2026 Naija Kolo. All Rights Reserved.
+    </div>
+    
+    </div>
+    
+    </footer>
+    
+
+    <script>
+
+        /* MOBILE MENU */
+        
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+        
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+        });
+        
+        /* CLOSE MENU WHEN LINK CLICKED */
+        
+        document.querySelectorAll(".nav-links a").forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("active");
+            });
+        });
+        
+        /* NAVBAR SCROLL EFFECT */
+        
+        window.addEventListener("scroll", () => {
+        
+            const header = document.querySelector("header");
+        
+            if(window.scrollY > 50){
+                header.style.background = "rgba(8,20,13,.98)";
+                header.style.boxShadow = "0 10px 30px rgba(0,0,0,.35)";
+            }else{
+                header.style.background = "rgba(8,20,13,.9)";
+                header.style.boxShadow = "none";
+            }
+        
+        });
+        
+        /* SCROLL ANIMATIONS */
+        
+        const observer = new IntersectionObserver((entries)=>{
+        
+            entries.forEach(entry=>{
+        
+                if(entry.isIntersecting){
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+        
+            });
+        
+        },{
+            threshold:0.15
+        });
+        
+        document.querySelectorAll(
+        ".feature-card,.hero-card,.section-title"
+        ).forEach(el=>{
+        
+            el.style.opacity = "0";
+            el.style.transform = "translateY(40px)";
+            el.style.transition = "all .8s ease";
+        
+            observer.observe(el);
+        
+        });
+        
+        /* BUTTON HOVER EFFECT */
+        
+        document.querySelectorAll(".btn").forEach(btn=>{
+        
+            btn.addEventListener("mouseenter",()=>{
+        
+                btn.style.transform = "translateY(-3px)";
+        
+            });
+        
+            btn.addEventListener("mouseleave",()=>{
+        
+                btn.style.transform = "translateY(0)";
+        
+            });
+        
+        });
+        
+        /* SIMPLE COUNTER ANIMATION */
+        
+        function animateValue(element,start,end,duration){
+        
+            let startTimestamp = null;
+        
+            const step = (timestamp)=>{
+        
+                if(!startTimestamp)
+                    startTimestamp = timestamp;
+        
+                const progress = Math.min(
+                    (timestamp - startTimestamp) / duration,
+                    1
+                );
+        
+                element.textContent =
+                "₦" +
+                Math.floor(
+                    progress * (end - start) + start
+                ).toLocaleString();
+        
+                if(progress < 1){
+                    window.requestAnimationFrame(step);
+                }
+            };
+        
+            window.requestAnimationFrame(step);
+        }
+        
+        const amountBox = document.querySelector(".amount");
+        
+        if(amountBox){
+        
+            const amountObserver = new IntersectionObserver((entries)=>{
+        
+                entries.forEach(entry=>{
+        
+                    if(entry.isIntersecting){
+        
+                        animateValue(
+                            amountBox,
+                            0,
+                            180000,
+                            2000
+                        );
+        
+                        amountObserver.disconnect();
+        
+                    }
+        
+                });
+        
+            });
+        
+            amountObserver.observe(amountBox);
+        
+        }
+        
+        /* FAQ ACCORDION */
+        
+        document.querySelectorAll("#faq .feature-card h3")
+        .forEach(question => {
+        
+            question.style.cursor = "pointer";
+        
+            question.addEventListener("click", () => {
+        
+                const answer =
+                question.nextElementSibling;
+        
+                if(answer.style.display === "none"){
+        
+                    answer.style.display = "block";
+        
+                }else{
+        
+                    answer.style.display = "none";
+        
+                }
+        
+            });
+        
+        });
+        
+        /* CURRENT YEAR */
+        
+        const footerYear = document.querySelector("#year");
+        
+        if(footerYear){
+            footerYear.textContent =
+            new Date().getFullYear();
+        }
+        
+        console.log(
+        "Naija Kolo Landing Page Loaded Successfully"
+        );
+        
+        </script>
+        
+        </body>
+        </html>
+        
