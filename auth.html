@@ -843,7 +843,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     
     if (profileError || !profile || !profile.kyc_completed) {
         // If there's an error finding the row or kyc_completed is false/null, force KYC completion
-        window.location.href = "kyc.html";
+        window.location.href = "#";
     } else {
         // User passed KYC, let them into the dashboard
         window.location.href = "dashboard.html";
