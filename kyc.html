@@ -13,49 +13,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
 
 :root {
-  --primary:#10b981;
-  --border:rgba(255,255,255,0.08);
+    --primary:#10b981;
+    --border:rgba(255,255,255,0.08);
 }
 
 body {
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:#0F172A;
-  padding-top:100px;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background-color:#0F172A;
+    padding-top:100px;
 }
 
 header {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:75px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:0 25px;
-  background:rgba(6,17,10,.92);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid var(--border);
-  z-index:1000;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:75px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 25px;
+    background:rgba(6,17,10,.92);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--border);
+    z-index:1000;
 }
 
 .logo {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-size:1.4rem;
-  font-weight:700;
-  color:white;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:1.4rem;
+    font-weight:700;
+    color:white;
 }
 
 .logo i {
-  color:var(--primary);
-  font-size:1.8rem;
+    color:var(--primary);
+    font-size:1.8rem;
 }
 
-.mono-text { font-family:'JetBrains Mono',monospace; }
+.mono-text { font-family:'JetBrains Mono', monospace; }
 
 .hidden-state { display:none !important; }
+
+.blur-glow {
+    background:radial-gradient(circle at center, rgba(16,185,129,0.06) 0%, transparent 70%);
+}
 </style>
 </head>
 
@@ -68,6 +72,9 @@ header {
   </div>
 </header>
 
+<!-- GLOW -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] blur-glow"></div>
+
 <!-- AUTH -->
 <div id="authGate" class="hidden-state text-center mt-20">
   <p class="text-slate-400 mb-4">Please login to continue</p>
@@ -78,25 +85,19 @@ header {
 <div id="appInterface" class="max-w-xl mx-auto p-6">
 
   <div class="flex justify-between items-center bg-slate-900 p-4 rounded-xl border border-slate-800">
-    <span class="text-slate-400">KYC Status</span>
+    <span class="text-slate-400">Verification Status</span>
     <span id="kycBadge" class="px-3 py-1 rounded-full text-xs">Checking...</span>
   </div>
 
-  <div id="statusBanner" class="hidden-state mt-4 p-3 rounded-xl border flex gap-2 items-start">
-    <span id="bannerIcon"></span>
-    <p id="bannerText"></p>
-  </div>
-
-  <!-- FORM -->
   <form id="kycForm" class="mt-6 space-y-4 hidden-state" onsubmit="handleVerificationSubmit(event)">
 
     <div class="grid grid-cols-2 gap-3">
-      <button type="button" onclick="setKycType('BVN')" id="btnBVN"
+      <button type="button" id="btnBVN" onclick="setKycType('BVN')"
         class="bg-emerald-500/10 border border-emerald-500 text-emerald-400 p-3 rounded-xl">
         BVN
       </button>
 
-      <button type="button" onclick="setKycType('NIN')" id="btnNIN"
+      <button type="button" id="btnNIN" onclick="setKycType('NIN')"
         class="bg-slate-900 border border-slate-800 text-slate-400 p-3 rounded-xl">
         NIN
       </button>
@@ -112,14 +113,13 @@ header {
 
     <button id="submitBtn"
       class="w-full bg-emerald-500 text-black font-bold p-4 rounded-xl">
-      Submit Verification
+      Initialize Verification
     </button>
   </form>
 
-  <!-- ACCOUNTS -->
-  <div id="accountsDashboard" class="hidden-state mt-6">
-    <h3 class="text-sm text-slate-400 mb-3">Your Accounts</h3>
-    <div id="accountsWrapper"></div>
+  <div id="statusBanner" class="hidden-state mt-4 p-3 rounded-xl border flex gap-2 items-start">
+    <span id="bannerIcon"></span>
+    <p id="bannerText"></p>
   </div>
 
 </div>
@@ -137,8 +137,8 @@ const authGate = document.getElementById("authGate");
 const appInterface = document.getElementById("appInterface");
 const kycBadge = document.getElementById("kycBadge");
 const kycForm = document.getElementById("kycForm");
-const accountsDashboard = document.getElementById("accountsDashboard");
-const accountsWrapper = document.getElementById("accountsWrapper");
+const banner = document.getElementById("statusBanner");
+const bannerText = document.getElementById("bannerText");
 
 window.onload = async () => {
   const { data } = await sb.auth.getSession();
@@ -174,36 +174,39 @@ async function syncKyc(userId) {
   const status = data?.status || "unverified";
 
   renderStatus(status, data?.verification_error);
-
-  if (status === "verified") {
-    loadAccounts(userId);
-  }
 }
 
 function renderStatus(status, error) {
   kycBadge.innerText = status;
 
   kycForm.classList.add("hidden-state");
-  accountsDashboard.classList.add("hidden-state");
 
   if (status === "verified") {
     kycBadge.className = "bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs";
-    autoRedirect();
+    banner.classList.add("hidden-state");
+
+    setTimeout(() => {
+      window.location.href = "/dashboard.html";
+    }, 2500);
   }
 
   else if (status === "pending") {
     kycBadge.className = "bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full text-xs";
-    kycForm.classList.add("hidden-state");
+    banner.classList.remove("hidden-state");
+    bannerText.innerText = "Verification in progress...";
   }
 
   else if (status === "failed") {
     kycBadge.className = "bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-xs";
     kycForm.classList.remove("hidden-state");
+    banner.classList.remove("hidden-state");
+    bannerText.innerText = error || "Verification failed.";
   }
 
   else {
     kycBadge.className = "bg-slate-800 text-slate-400 px-3 py-1 rounded-full text-xs";
     kycForm.classList.remove("hidden-state");
+    banner.classList.add("hidden-state");
   }
 }
 
@@ -217,7 +220,7 @@ async function handleVerificationSubmit(e) {
   const identity = document.getElementById("identityNumber").value;
 
   if (identity.length !== 11) {
-    alert("Invalid ID");
+    alert("Enter valid 11-digit ID");
     return;
   }
 
@@ -239,35 +242,9 @@ async function handleVerificationSubmit(e) {
 
   } catch (err) {
     kycBadge.innerText = "failed";
-    alert(err.message);
+    banner.classList.remove("hidden-state");
+    bannerText.innerText = err.message;
   }
-}
-
-async function loadAccounts(userId) {
-  const { data } = await sb
-    .from("monnify_accounts")
-    .select("*")
-    .eq("user_id", userId);
-
-  accountsWrapper.innerHTML = "";
-
-  data?.forEach(acc => {
-    const div = document.createElement("div");
-    div.className = "p-3 bg-slate-900 rounded-xl border border-slate-800 mb-2";
-    div.innerHTML = `
-      <div class="text-emerald-400 text-xs">${acc.bank_name}</div>
-      <div class="font-bold mono-text">${acc.account_number}</div>
-    `;
-    accountsWrapper.appendChild(div);
-  });
-
-  accountsDashboard.classList.remove("hidden-state");
-}
-
-function autoRedirect() {
-  setTimeout(() => {
-    window.location.href = "/dashboard.html";
-  }, 3000);
 }
 </script>
 
