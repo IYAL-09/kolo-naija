@@ -344,7 +344,7 @@
             clearInterval(redirectTimer);
             redirectTimer = setInterval(() => {
                 secondsLeft--;
-                if (secondsLeft <= -100) {
+                if (secondsLeft <= 5) {
                     clearInterval(redirectTimer);
                     window.location.href = '/dashboard.html';
                 } else {
